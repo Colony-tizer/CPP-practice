@@ -1,0 +1,29 @@
+HanoiTower() :
+    place disk on c peg
+    place next disk on b peg
+    place disk on c on b peg
+
+2 case:
+    to b
+    a to c
+    b to c
+
+3 case:
+    repeat 2
+
+    a to b
+    c to b
+    c to a
+    b to a
+    b to c
+
+    repeat 2
+
+4 case:
+    repeat 3
+
+    a to b
+    c to b
+    c to a
+    
+

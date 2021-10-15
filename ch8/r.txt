@@ -1,0 +1,24 @@
+3. given: < && || !
+>: a < b && !(b < a) 
+0, 1: 0 < 1 && !(1 < 0) => t && t
+1, 1: 1 < 1 && !(1 < 1) => f && t
+
+==: !(a < b) && !(b < a)
+0, 1: !(0 < 1) && !(1 < 0) => f && t
+1, 1: !(1 < 1) && !(1 < 1) => t && t
+
+!=: (a < b) || (b < a)
+0, 1: 0 < 1 || 1 < 0 => t || f
+1, 1: 1 < 1 || 1 < 1 => f || f
+
+<=: (!(a < b) && !(b < a)) || (a < b) 
+0, 1: (!(0 < 1) && !(1 < 0)) || 0 < 1 => f || t
+1, 1: (!(1 < 1) && !(1 < 1)) || 1 < 1 => t || f
+
+>=: (!(a < b) && !(b < a)) || (a < b && !(b < a))
+0, 1: f || t
+1, 1: t || f
+
+4. 
+5. Under any circumstances. Preorder traversal visit parent and then childrens. Therefore parent's label will be always less than childrens
+

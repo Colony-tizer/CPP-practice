@@ -1,0 +1,12 @@
+DequeArr a(3);
+[0,0,0]
+a.insertFront(1) // firstInd = 0
+[1,0,0]
+a.insertBack(2) // lastInd = 1
+[1,2,0]
+a.insertFront(-1) // lastInd =  a.size() - 1 = 2
+[1,2,-1]
+a.removeBack() // lastInd = 0
+[1,0,-1]
+a.removeFront() // firstInd = 0
+[1,0,0]
