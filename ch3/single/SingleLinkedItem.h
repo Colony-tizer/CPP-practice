@@ -7,20 +7,20 @@
 template <class T>
 class SingleLinkedItem {
     public:
-        typedef T value_type;
-        typedef T& ref_type;
-        typedef T const& const_ref_type;
-        typedef T* ptr_type;
+        typedef T Value_t;
+        typedef T& Ref_t;
+        typedef T const& Ref_const_t;
+        typedef T* Prt_t;
 
         SingleLinkedItem() : next(nullptr) {
-            value = value_type();
+            value = Value_t();
         }
 
-        SingleLinkedItem(const_ref_type val) : next(nullptr) {
+        SingleLinkedItem(Ref_const_t val) : next(nullptr) {
             value = val;
         }
 
-        SingleLinkedItem(ref_type val) : next(nullptr) {
+        SingleLinkedItem(Ref_t val) : next(nullptr) {
             value = val;
         }
 
@@ -30,7 +30,7 @@ class SingleLinkedItem {
 
         ~SingleLinkedItem() {}
 
-        inline const_ref_type getValue() const {
+        inline Ref_const_t getValue() const {
             return this->value;
         }
 
@@ -38,7 +38,7 @@ class SingleLinkedItem {
             return next;
         }
 
-        inline void setValue(const_ref_type val) {
+        inline void setValue(Ref_const_t val) {
             value = val;
         }
 
@@ -65,7 +65,7 @@ class SingleLinkedItem {
             return os;
         }
     private:
-        value_type value;
+        Value_t value;
         SingleLinkedItem *next;
         
 };

@@ -4,42 +4,34 @@
 
 #include <ostream>
 #include "SingleLinkedItem.h"
-template <class T> class SingleLinkedItem;
+template <typename T> class SingleLinkedItem;
+template <typename T> class SingleLinkedList;
 
-template <class T>
+template<typename T>
+std::ostream& operator<<(std::ostream&, const SingleLinkedList<T>&);
+
+template <typename T>
 class SingleLinkedList {
-    private:    
-        typedef SingleLinkedItem<T> item_type;
-        typedef item_type* item_ptr;
-        typedef item_type& item_ref;
-        typedef item_type const& item_const_ref;
-    public:
-        typedef typename item_type::value_type value_type;
-        typedef typename item_type::ref_type ref_type;
-        typedef typename item_type::const_ref_type const_ref_type;
-        typedef typename item_type::ptr_type ptr_type;
+    private:
+        typedef SingleLinkedItem<T> Single_link_item_t;
+        typedef Single_link_item_t* Single_link_item_ptr_t;
+        typedef Single_link_item_t& Single_link_item_ref_t;
+        typedef Single_link_item_t const& Single_link_item_ref_const_t;
 
+    public:
         SingleLinkedList();
         ~SingleLinkedList();
         bool isEmpty();
         void removeFront();
 
-        item_const_ref front() const;
-        const_ref_type frontVal() const;
-        void addFront(item_const_ref obj);
-        void addFront(const_ref_type val);
-        
+        Single_link_item_ref_const_t front() const;
+        typename Single_link_item_t::Ref_const_t frontVal() const;
+        void addFront(Single_link_item_ref_const_t obj);
+        void addFront(typename Single_link_item_t::Ref_t val);
+        friend std::ostream& operator<< <>(std::ostream& os, const SingleLinkedList<T>& obj);
 
-        friend std::ostream& operator<<(std::ostream& os, SingleLinkedList& obj) {
-            item_ptr printObj = obj.head;
-            if (printObj)
-                printObj->print(os)<<"\n";
-            else 
-                os<<"NULL\n";
-            return os;
-        }
     private:
-        item_ptr head;
+        Single_link_item_ptr_t head;
 };
 #include "SingleLinkedList.tpp"
 #endif

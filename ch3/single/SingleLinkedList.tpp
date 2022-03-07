@@ -1,49 +1,57 @@
 #include "SingleLinkedList.h"
-template <class T>
+template <typename T>
 SingleLinkedList<T>::SingleLinkedList() {
     head = nullptr;
 }
-template <class T>
+template <typename T>
 SingleLinkedList<T>::~SingleLinkedList() {
     while (!isEmpty())
         removeFront();
     
 }
-template <class T>
+template <typename T>
 bool SingleLinkedList<T>::isEmpty() {
     return !head;
 }
 
-template <class T>
-typename SingleLinkedList<T>::item_const_ref SingleLinkedList<T>::front() const {
+template <typename T>
+typename SingleLinkedList<T>::Single_link_item_ref_const_t SingleLinkedList<T>::front() const {
     return *head;
 }
-template <class T>
-typename SingleLinkedList<T>::const_ref_type SingleLinkedList<T>::frontVal() const {
+template <typename T>
+typename SingleLinkedList<T>::Single_link_item_t::Ref_const_t SingleLinkedList<T>::frontVal() const {
     return head->getValue();
 }
 
-template <class T>
-void SingleLinkedList<T>::addFront(item_const_ref obj) {
-    item_ptr newObj = new item_type(obj);
+template <typename T>
+void SingleLinkedList<T>::addFront(Single_link_item_ref_const_t obj) {
+    Single_link_item_ptr_t newObj = new Single_link_item_t(obj);
     newObj->setNext(head);
-    //newObj->next = head;
     head = newObj;
 }
 
-template <class T>
-void SingleLinkedList<T>::addFront(const_ref_type val) {
-    item_ptr newObj = new item_type(val);
+template <typename T>
+void SingleLinkedList<T>::addFront(typename Single_link_item_t::Ref_t val) {
+    Single_link_item_ptr_t newObj = new Single_link_item_t(val);
     this->addFront(*newObj);
     delete newObj;
 }
 
-
-template <class T>
+template <typename T>
 void SingleLinkedList<T>::removeFront() {
     if (head) {
-        item_ptr remObj = head;
+        Single_link_item_ptr_t remObj = head;
         head = head->getNext();
         delete remObj;
     }
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const SingleLinkedList<T>& obj) {
+    typename SingleLinkedList<T>::Single_link_item_ptr_t printObj = obj.head;
+    if (printObj)
+        printObj->print(os)<<"\n";
+    else 
+        os<<"NULL\n";
+    return os;
 }
