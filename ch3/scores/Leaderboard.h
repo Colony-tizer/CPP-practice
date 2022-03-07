@@ -1,29 +1,29 @@
-#ifndef SCORES_H_
+#ifndef LEADERBOARD_H_
 
-#define SCORES_H_
+#define LEADERBOARD_H_
 
 #include "GameEntry.h"
 
-using namespace std;
-
-
-class Scores {
+class Leaderboard {
     private:
         enum CheckMode {
             BothCheck = 0x11,
             ScoreCheck = 0x01,
             NameCheck = 0x10
         };
+
     public:
-        Scores(int cap = 10);
+        Leaderboard(int cap = 10);
+        ~Leaderboard();
         void add(const GameEntry &entry);
         GameEntry remove(int score);
         GameEntry remove(const GameEntry &entry);
-        string toString() const;
-        ~Scores();
+        std::string toString() const;
+
     private:
         GameEntry remove(const GameEntry &entry, CheckMode mode);
-        GameEntry removeAt(int ind);
+        GameEntry removeAt(int idx);
+
     private:
         GameEntry *scores;
         int capacity;
