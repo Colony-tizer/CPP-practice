@@ -49,9 +49,12 @@ void SingleLinkedList<T>::removeFront() {
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const SingleLinkedList<T>& obj) {
     typename SingleLinkedList<T>::Single_link_item_ptr_t printObj = obj.head;
+    const std::string NULL_STR = "NULL";
+
     if (printObj)
-        printObj->print(os)<<"\n";
+        os << (*printObj);
     else 
-        os<<"NULL\n";
+        os << NULL_STR;
+
     return os;
 }

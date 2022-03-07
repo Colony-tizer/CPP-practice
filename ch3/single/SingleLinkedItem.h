@@ -24,7 +24,7 @@ class SingleLinkedItem {
             value = val;
         }
 
-        SingleLinkedItem(const SingleLinkedItem &item) {
+        SingleLinkedItem(const SingleLinkedItem<T> &item) {
             value = item.value; next = item.next;
         }
 
@@ -34,7 +34,7 @@ class SingleLinkedItem {
             return this->value;
         }
 
-        inline SingleLinkedItem* getNext() const {
+        inline SingleLinkedItem<T>* getNext() const {
             return next;
         }
 
@@ -42,26 +42,23 @@ class SingleLinkedItem {
             value = val;
         }
 
-        inline void setNext(const SingleLinkedItem &item) {
+        inline void setNext(const SingleLinkedItem<T> &item) {
             next = new SingleLinkedItem<T>(item);
         }
 
-        inline void setNext(SingleLinkedItem *item) {
+        inline void setNext(SingleLinkedItem<T> *item) {
             next = item;
         }
-        std::string toString() {
-            std::string items = value + " >> ";
-            if (next)
-                items += next->toString();
-            else items += "NULL";
-            return items;
-        }
-        std::ostream& print(std::ostream &os) {
-            os<<value<<" -> ";
-            if (next)
-                next->print(os);
-            else
-                os<<"NULL\n";
+
+        friend std::ostream& operator<<(std::ostream& os, const SingleLinkedItem<T>& obj) {
+            SingleLinkedItem<T>::Value_t printObj = obj.value;
+
+            os << obj.getValue(); 
+            if (obj.next) {
+                os << " -> ";
+                os << (*obj.getNext());
+            }
+
             return os;
         }
     private:
