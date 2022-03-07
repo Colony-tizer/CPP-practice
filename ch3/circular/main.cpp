@@ -1,31 +1,39 @@
 #include <iostream>
 #include "CList.h"
+
 using namespace std;
+
 template <class T>
 void printAllList(CList<T>* list) {
     int total = list->getSize();
     while (total-- > 0) {
-        cout<<list->back()<<" ";
+        cout << list->back() << " ";
         list->advance();
     }
-    cout<<endl;
+    cout << endl;
 }
+
 int main() {
-    CList<int> *cl = new CList<int>();
-    cl->add(1);
-    cout<<"cur: "<<cl->back()<<endl;
-    cout<<"next: "<<cl->front()<<endl;
-    printAllList(cl);
-    cl->advance();
-    printAllList(cl);
-    cl->add(10);
-    printAllList(cl);
-    cl->add(100);
-    printAllList(cl);
+    CList<int> *circularList = new CList<int>();
+    
+    circularList->add(1);
+    cout << "cur: " << circularList->back() << endl;
+    cout << "next: " << circularList->front() << endl;
+
+    printAllList(circularList);
+    circularList->advance();
+    printAllList(circularList);
+    circularList->add(10);
+    printAllList(circularList);
+    circularList->add(100);
+    printAllList(circularList);
+
+    cout << circularList->toString();
+
     try {
-        while (cl->getSize() >= 0)
-            cl->remove();
+        while (circularList->getSize() >= 0)
+            circularList->remove();
     } catch (ListEmptyError& err) {
-        cout<<err.what()<<endl;
+        cout << err.what() << endl;
     }
 }

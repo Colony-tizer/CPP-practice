@@ -10,7 +10,7 @@ class SingleLinkedItem {
         typedef T Value_t;
         typedef T& Ref_t;
         typedef T const& Ref_const_t;
-        typedef T* Prt_t;
+        typedef T* Ptr_t;
 
         SingleLinkedItem() : next(nullptr) {
             value = Value_t();
