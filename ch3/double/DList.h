@@ -5,43 +5,48 @@
 #include <ostream>
 #include <string>
 
-template <class T> class DItem;
+template <typename T> class DItem;
 
-template <class T> 
+template <typename T> 
 class DList {
     private:
-        typedef DItem<T> item_val;
-        typedef item_val* item_ptr;
-        typedef item_val& item_ref;
-        typedef const item_val& const_item_ref;
+        typedef DItem<T> DItem_t;
+        typedef DItem_t& DItem_ref_t;
+        typedef const DItem_t& DItem_ref_const_t;
+        typedef DItem_t* DItem_ptr_t;
+
     public:
-        typedef typename item_val::value_type value_type;
-        typedef typename item_val::ptr_type ptr_type;
-        typedef typename item_val::ref_type ref_type;
-        typedef typename item_val::const_ref_type const_ref_type;
+        typedef typename DItem_t::Value_t Value_t;
+        typedef typename DItem_t::Ptr_t Ptr_t;
+        typedef typename DItem_t::Ref_t Ref_t;
+        typedef typename DItem_t::Ref_const_t Ref_const_t;
 
         DList() : size(0), head(nullptr), tail(nullptr) {}
-        DList(const_ref_type val);
-        DList(const_item_ref obj);
+        DList(Ref_const_t val);
+        DList(DItem_ref_const_t obj);
         ~DList();
 
         bool isEmpty() const;
         int getSize() const;
-        void popFront(); 
-        //item_ptr popFront(); // it is not efficient to return removed value
-        const_ref_type front() const;
-        const_ref_type at(const int i) const;
-        void addAt(const int i, const_ref_type val);
-        void addAt(const int i, const_item_ref item);
+
+        Ref_const_t front() const;
+        Ref_const_t at(const int i) const;
+
+        void addAt(const int i, Ref_const_t val);
+        void addAt(const int i, DItem_ref_const_t item);
+
+        void addFront(Ref_const_t val);
+        void addFront(DItem_ref_const_t item);
+
         void removeAt(const int i);
-        void addFront(const_ref_type val);
-        void addFront(const_item_ref item);
+        void popFront(); 
 
         std::string toString() {
             return head->toString();
         }
+
         friend std::ostream& operator<<(std::ostream& os, DList& list) {
-            item_ptr obj = list.head;
+            DItem_ptr_t obj = list.head;
             if (obj)
                 obj->print(os);
             else os<< "NULL";
@@ -49,10 +54,11 @@ class DList {
         }
 
     private:
-        item_ptr getItemAt(const int i) const; 
+        DItem_ptr_t getItemAt(const int i) const; 
+
     private:
-        item_ptr head;
-        item_ptr tail;
+        DItem_ptr_t head;
+        DItem_ptr_t tail;
         int size;
 };
 

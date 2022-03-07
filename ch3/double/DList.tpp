@@ -1,19 +1,17 @@
 #include "DList.h"
-/*
-template <class T>
-DList<T>::DList() : size(0), head(nullptr), tail(nullptr) {}
-*/
-template <class T>
-DList<T>::DList(DList<T>::const_ref_type val) {
-    head = new item_val(val);
+
+template <typename T>
+DList<T>::DList(DList<T>::Ref_const_t val) {
+    head = new DItem_t(val);
     tail = nullptr;
     size = 1;
 }
-template <class T>
-DList<T>::DList(DList<T>::const_item_ref obj) {
+
+template <typename T>
+DList<T>::DList(DList<T>::DItem_ref_const_t obj) {
     head = obj;
     size = 1;
-    ptr_type next = head;
+    Ptr_t next = head;
     while (next->getNext()) { 
         ++size;
         next->setNext(next->getNext());
@@ -21,59 +19,44 @@ DList<T>::DList(DList<T>::const_item_ref obj) {
     tail = next;
 }
 
-template <class T>
+template <typename T>
 DList<T>::~DList() {
     while (!isEmpty()) popFront();
     tail = nullptr;
 }
 
-template <class T>
+template <typename T>
 bool DList<T>::isEmpty() const {
     return !head;
 }
-template <class T>
+
+template <typename T>
 int DList<T>::getSize() const {
     return size;
 }
 
-template <class T>
-void DList<T>::popFront() {
-    removeAt(0);
-}
-template <class T>
-typename DList<T>::const_ref_type DList<T>::front() const {
+template <typename T>
+typename DList<T>::Ref_const_t DList<T>::front() const {
     return at(0);
 }
-template <class T>
-typename DList<T>::const_ref_type DList<T>::at(const int i) const {
+
+template <typename T>
+typename DList<T>::Ref_const_t DList<T>::at(const int i) const {
     return getItemAt(i)->getValue();
 }
-template <class T>
-typename DList<T>::item_ptr DList<T>::getItemAt(const int i) const {
-    const bool isNearHead = getSize() > 1 ? ((double)i / ((double)getSize()-1)) <= 0.5 : true;
-    int cnt = (isNearHead) ? 0 : getSize() - 1;
-    item_ptr obj = (isNearHead) ? head : tail;
-    while (obj && ((isNearHead && cnt < i) || (!isNearHead && cnt > 0))) {
-        obj = (isNearHead) ? obj->getNext() : obj->getPrev();
-        cnt = (isNearHead) ? cnt + 1 : cnt - 1;
-    }
-    if (cnt != i || !obj)
-        obj = tail;
-    
-    return obj;
-}
-template <class T>
-void DList<T>::addAt(const int i, DList<T>::const_ref_type val) {
-    item_val added(val);
-    addAt(i, added);
-    //return obj->value;
-}
-template <class T>
-void DList<T>::addAt(const int i, DList<T>::const_item_ref item) {
-    if (isEmpty()) addFront(item);
-    item_ptr obj = getItemAt(i);
 
-    item_ptr added = new item_val(item);
+template <typename T>
+void DList<T>::addAt(const int i, DList<T>::Ref_const_t val) {
+    DItem_t added(val);
+    addAt(i, added);
+}
+
+template <typename T>
+void DList<T>::addAt(const int i, DList<T>::DItem_ref_const_t item) {
+    if (isEmpty()) addFront(item);
+    DItem_ptr_t obj = getItemAt(i);
+
+    DItem_ptr_t added = new DItem_t(item);
     if (i < size) {
         added->setPrev(obj->getPrev());
         added->setNext(obj);
@@ -87,13 +70,34 @@ void DList<T>::addAt(const int i, DList<T>::const_item_ref item) {
     }
     ++size;
 }
-template <class T>
+
+template <typename T>
+void DList<T>::addFront(DList<T>::Ref_const_t val) {
+    DItem_t added(val);
+    addFront(added);
+}
+template <typename T>
+void DList<T>::addFront(DList<T>::DItem_ref_const_t item) {
+    ++size;
+
+    DItem_ptr_t obj = new DItem_t(item);
+    if (isEmpty()) {
+        head = obj;
+        tail = head;
+    } else {
+        head->setPrev(obj);
+        obj->setNext(head);
+        head = obj;
+    }
+}
+
+template <typename T>
 void DList<T>::removeAt(const int i) {    
     if (isEmpty()) return;
 
     --size;
 
-    item_ptr obj = getItemAt(i);
+    DItem_ptr_t obj = getItemAt(i);
     bool isNextNull = !obj->getNext(), isPrevNull = !obj->getPrev();
 
     if (!isPrevNull)
@@ -106,22 +110,23 @@ void DList<T>::removeAt(const int i) {
 
     delete obj;
 }
-template <class T>
-void DList<T>::addFront(DList<T>::const_ref_type val) {
-    item_val added(val);
-    addFront(added);
-}
-template <class T>
-void DList<T>::addFront(DList<T>::const_item_ref item) {
-    ++size;
 
-    item_ptr obj = new item_val(item);
-    if (isEmpty()) {
-        head = obj;
-        tail = head;
-    } else {
-        head->setPrev(obj);
-        obj->setNext(head);
-        head = obj;
+template <typename T>
+void DList<T>::popFront() {
+    removeAt(0);
+}
+
+template <typename T>
+typename DList<T>::DItem_ptr_t DList<T>::getItemAt(const int i) const {
+    const bool isNearHead = getSize() > 1 ? ((double)i / ((double)getSize()-1)) <= 0.5 : true;
+    int cnt = (isNearHead) ? 0 : getSize() - 1;
+    DItem_ptr_t obj = (isNearHead) ? head : tail;
+    while (obj && ((isNearHead && cnt < i) || (!isNearHead && cnt > 0))) {
+        obj = (isNearHead) ? obj->getNext() : obj->getPrev();
+        cnt = (isNearHead) ? cnt + 1 : cnt - 1;
     }
+    if (cnt != i || !obj)
+        obj = tail;
+    
+    return obj;
 }

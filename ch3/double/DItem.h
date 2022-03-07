@@ -5,22 +5,20 @@
 #include <string>
 #include "DList.h"
 
-template <class T>
+template <typename T>
 class DItem {
-    private:
-        //template <class Item> friend class DList;
     public:
-        typedef T value_type;
-        typedef T* ptr_type;
-        typedef T& ref_type;
-        typedef T const& const_ref_type;
+        typedef T Value_t;
+        typedef T& Ref_t;
+        typedef T const& Ref_const_t;
+        typedef T* Ptr_t;
 
         DItem() : value(), prev(nullptr), next(nullptr) {}
-        DItem(const_ref_type val) : value(val), prev(nullptr), next(nullptr) {}
+        DItem(Ref_const_t val) : value(val), prev(nullptr), next(nullptr) {}
         DItem(const DItem<T>& obj) : value(obj.value), prev(obj.prev), next(obj.next) {}
         ~DItem() {}
         
-        inline const_ref_type getValue() const {
+        inline Ref_const_t getValue() const {
             return value;
         }
 
@@ -32,7 +30,7 @@ class DItem {
             return prev;
         }
         
-        inline void setValue(const_ref_type val){
+        inline void setValue(Ref_const_t val){
             value = val;
         }
 
@@ -73,7 +71,7 @@ class DItem {
             return os;
         }
     private:
-        value_type value;
+        Value_t value;
         DItem *prev;
         DItem *next;
 };

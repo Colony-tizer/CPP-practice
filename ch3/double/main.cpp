@@ -4,14 +4,15 @@
 
 using namespace std;
 int main() {
-    DItem<string> a("goodEnding");
+    DItem<string> addingItem("goodEnding");
     DList<string> *list = new DList<string>();
+
     list->getSize();
-    list->addFront(a);
+    list->addFront(addingItem);
     list->addFront("niceContinuation");
 
-    DItem<string> *b = new DItem<string>("unexpectedTurnaround");
-    list->addFront(*b);
+    DItem<string> *secondItem = new DItem<string>("unexpectedTurnaround");
+    list->addFront(*secondItem);
     list->addFront("awesomeStart");
     int mid = (list->getSize() - 1) / 2 ;
 
@@ -19,16 +20,16 @@ int main() {
     midItem->print(cout);
     list->addAt(mid, "ordinaryMove");
 
-    a.setValue("boringStart...");
-    list->addFront(a);
-    a.print(cout)<<endl;
+    addingItem.setValue("boringStart...");
+    list->addFront(addingItem);
+    addingItem.print(cout)<<endl;
     cout<<(*list);
     
     mid = (list->getSize() - 1) / 2 ;
     list->removeAt(mid);
     cout<<(*list);
 
-    delete b;
+    delete secondItem;
     delete list;
     delete midItem;
 }
