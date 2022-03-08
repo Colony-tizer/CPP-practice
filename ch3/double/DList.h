@@ -42,7 +42,11 @@ class DList {
         void popFront(); 
 
         std::string toString() {
-            return head->toString();
+            std::string res = "NULL";
+            if (head)
+                res = head->toString();
+
+            return res;
         }
 
         friend std::ostream& operator<<(std::ostream& os, DList& list) {
@@ -50,6 +54,7 @@ class DList {
             if (obj)
                 obj->print(os);
             else os<< "NULL";
+
             return os;
         }
 
