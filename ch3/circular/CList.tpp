@@ -83,3 +83,14 @@ std::string CList<T>::toString() {
     listStr += "HEAD: " + std::to_string(front()) + "\n";
     return listStr;
 }
+
+template <>
+std::string CList<std::string>::toString() {
+    std::string listStr = "HEAD: ";
+    for (int i = 0; i < size; ++i) {
+        listStr += front() + " >> ";
+        advance();
+    }
+    listStr += "HEAD: " + front() + "\n";
+    return listStr;
+}

@@ -14,7 +14,7 @@ class CList {
         typedef typename Single_link_item_t::Ptr_t Ptr_t;
         typedef typename Single_link_item_t::Ref_t Ref_t;
         typedef typename Single_link_item_t::Ref_const_t Ref_const_t;
-        
+
     public:
         CList();
         ~CList();
