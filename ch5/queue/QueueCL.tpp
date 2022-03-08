@@ -1,41 +1,48 @@
 #include "QueueCL.h"
 
 
-template <class T>
+template <typename T>
 QueueCL<T>::QueueCL() {
-    list = new list_value_type();
+    list = new CList_value_t();
 }
-template <class T>
+
+template <typename T>
 QueueCL<T>::~QueueCL() {
     delete list;
 }
-template <class T>
+
+template <typename T>
 bool QueueCL<T>::isEmpty() const {
     return list->isEmpty();
 }
-template <class T>
-int QueueCL<T>::getSize() const {
+
+template <typename T>
+uint16_t QueueCL<T>::getSize() const {
     return list->getSize();
 }
-template <class T>
-typename QueueCL<T>::const_ref_type QueueCL<T>::front() const {
+
+template <typename T>
+typename QueueCL<T>::Ref_const_t QueueCL<T>::front() const {
     return list->front();
 }
-template <class T>
-typename QueueCL<T>::const_ref_type QueueCL<T>::last() const {
+
+template <typename T>
+typename QueueCL<T>::Ref_const_t QueueCL<T>::last() const {
     return list->back();
 }
-template <class T>
+
+template <typename T>
 void QueueCL<T>::dequeue() {
     list->remove();
 }
-template <class T>
-void QueueCL<T>::enqueue(const_ref_type val) {
+
+template <typename T>
+void QueueCL<T>::enqueue(Ref_const_t val) {
     list->add(val);
     list->advance();
 }
 
-template <class T>
+template <typename T>
 std::string QueueCL<T>::toString() const {
     return !isEmpty() ? list->toString() : "NULL\n";
 }

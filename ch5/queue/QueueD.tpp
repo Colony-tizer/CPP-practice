@@ -1,47 +1,57 @@
 #include "QueueD.h"
 
-template <class T>
+template <typename T>
 QueueD<T>::QueueD() {
-    list = new list_value_type();
+    list = new DList_value_t();
 }
-template <class T>
+
+template <typename T>
 QueueD<T>::~QueueD() {
     delete list;
 }
-template <class T>
+
+template <typename T>
 bool QueueD<T>::isEmpty() const {
     return list->isEmpty();
 }
-template <class T>
-int QueueD<T>::getSize() const {
+
+template <typename T>
+uint16_t QueueD<T>::getSize() const {
     return list->getSize();
 }
-template <class T>
-typename QueueD<T>::const_ref_type QueueD<T>::front() const {
+
+template <typename T>
+typename QueueD<T>::Ref_const_t QueueD<T>::front() const {
     return list->front();
 }
-template <class T>
-typename QueueD<T>::const_ref_type QueueD<T>::back() const {
+
+template <typename T>
+typename QueueD<T>::Ref_const_t QueueD<T>::back() const {
     return list->at(list->getSize()-1);
 }
-template <class T>
-void QueueD<T>::insertFront(const_ref_type val) {
+
+template <typename T>
+void QueueD<T>::insertFront(Ref_const_t val) {
     list->addFront(val);
 }
-template <class T>
-void QueueD<T>::insertBack(const_ref_type val) {
+
+template <typename T>
+void QueueD<T>::insertBack(Ref_const_t val) {
     list->addAt(list->getSize(), val);
 }
-template <class T>
+
+template <typename T>
 void QueueD<T>::removeFront() {
     list->popFront();
 }
-template <class T>
+
+template <typename T>
 void QueueD<T>::removeBack() {
-    list->removeAt(list->getSize()-1);
+    const int REMOVE_INDEX = std::max(0, list->getSize() - 1);
+    list->removeAt(REMOVE_INDEX);
 }
 
-template <class T>
+template <typename T>
 std::string QueueD<T>::toString() {
     return list->toString();
 }

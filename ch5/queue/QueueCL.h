@@ -2,32 +2,35 @@
 #define QUEUECL_H_
 #include "../../ch3/circular/CList.h"
 #include <string>
-template <class T> class CList;
+template <typename T> class CList;
 
-template <class T>
+template <typename T>
 class QueueCL {
     private:
-        typedef CList<T> list_value_type;
-        typedef list_value_type* list_ptr_type;
-        typedef list_value_type& list_ref_type;
-        typedef list_value_type const& list_const_ref_type;
+        typedef CList<T> CList_value_t;
+        typedef CList_value_t* CList_ptr_t;
 
-        typedef T value_type;
-        typedef T* ptr_type;
-        typedef T& ref_type;
-        typedef T const& const_ref_type;
+        typedef T Value_t;
+        typedef T* Ptr_t;
+        typedef T& Ref_t;
+        typedef T const& Ref_const_t;
+
     public:
         QueueCL();
         ~QueueCL();
+
         bool isEmpty() const;
-        int getSize() const;
-        const_ref_type front() const;
-        const_ref_type last() const;
+        uint16_t getSize() const;
+        Ref_const_t front() const;
+        Ref_const_t last() const;
+
         void dequeue();
-        void enqueue(const_ref_type val);
+        void enqueue(Ref_const_t val);
+
         std::string toString() const;
+
     private:
-        list_ptr_type list;
+        CList_ptr_t list;
 };
 
 #include "QueueCL.tpp"

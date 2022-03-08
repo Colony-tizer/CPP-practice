@@ -1,48 +1,58 @@
 #include "Queue.h"
 #include "Exceptions.h"
 
-template <class T>
-Queue<T>::Queue(const int capacity) {
+template <typename T>
+Queue<T>::Queue(const uint16_t capacity /*= 10*/) {
     this->capacity = capacity;
-    array = new value_type[capacity];
+    array = new Value_t[capacity];
     firstIndex = lastIndex = 0;
     queueSize = 0;
 }
-template <class T>
+
+template <typename T>
 Queue<T>::~Queue() {
     delete[] array;
 }
-template <class T>
+
+template <typename T>
 bool Queue<T>::isEmpty() const {
     return getSize() == 0;
 }
-template <class T>
-int Queue<T>::getSize() const {
+
+template <typename T>
+uint16_t Queue<T>::getSize() const {
     return queueSize;
 }
-template <class T>
-typename Queue<T>::const_ref_type Queue<T>::front() const {
+
+template <typename T>
+typename Queue<T>::Ref_const_t Queue<T>::front() const {
     if (isEmpty()) throw QueueEmptyError();
+
     return array[firstIndex];
 }
-template <class T>
-typename Queue<T>::const_ref_type Queue<T>::last() const {
+
+template <typename T>
+typename Queue<T>::Ref_const_t Queue<T>::last() const {
     if (isEmpty()) throw QueueEmptyError();
+
     return array[lastIndex];
 }
-template <class T>
+
+template <typename T>
 void Queue<T>::dequeue() {
     if (isEmpty()) throw QueueEmptyError();
 
     firstIndex = (firstIndex + 1) % capacity;
+
     --queueSize;
 }
-template <class T>
-void Queue<T>::enqueue(Queue<T>::const_ref_type val) {
+
+template <typename T>
+void Queue<T>::enqueue(Queue<T>::Ref_const_t val) {
     if (queueSize == capacity) throw QueueFullError();
-    
-    array[lastIndex] = value_type(val);
+
+    array[lastIndex] = Value_t(val);
     lastIndex = (lastIndex + 1) % capacity;
-    
+
     ++queueSize;
 }

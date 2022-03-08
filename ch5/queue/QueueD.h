@@ -2,34 +2,37 @@
 #define QUEUED_H_
 #include "../../ch3/double/DList.h"
 #include <string>
-template <class T> class DList;
+template <typename T> class DList;
 
-template <class T>
+template <typename T>
 class QueueD {
     private:
-        typedef DList<T> list_value_type;
-        typedef list_value_type* list_ptr_type;
-        typedef list_value_type& list_ref_type;
-        typedef list_value_type const& list_const_ref_type;
+        typedef DList<T> DList_value_t;
+        typedef DList_value_t* DList_ptr_t;
 
-        typedef T value_type;
-        typedef T* ptr_type;
-        typedef T& ref_type;
-        typedef T const& const_ref_type;
+        typedef T Value_t;
+        typedef T* Ptr_t;
+        typedef T& Ref_t;
+        typedef T const& Ref_const_t;
+
     public:
         QueueD();
         ~QueueD();
+
         bool isEmpty() const;
-        int getSize() const;
-        const_ref_type front() const;
-        const_ref_type back() const;
-        void insertFront(const_ref_type val);
-        void insertBack(const_ref_type val);
+        uint16_t getSize() const;
+        Ref_const_t front() const;
+        Ref_const_t back() const;
+
+        void insertFront(Ref_const_t val);
+        void insertBack(Ref_const_t val);
         void removeFront();
         void removeBack();
+
         std::string toString();
+
     private:
-        list_ptr_type list;
+        DList_ptr_t list;
 };
 
 #include "QueueD.tpp"
