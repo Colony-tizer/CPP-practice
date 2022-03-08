@@ -1,30 +1,33 @@
 #include "StackSList.h"
-template <class T>
+template <typename T>
 StackSList<T>::StackSList() {
-    this->list = new slistType();
+    this->list = new SList_t();
     this->curItemsNum = 0;
 }
 
-template <class T>
+template <typename T>
 StackSList<T>::~StackSList() {
     delete this->list;
 }
 
-template <class T>
+template <typename T>
 inline bool StackSList<T>::isEmpty() const {
     return this->list->isEmpty();
 }
-template <class T>
-typename StackSList<T>::const_ref_type StackSList<T>::top() const {
+
+template <typename T>
+typename StackSList<T>::Ref_const_t StackSList<T>::top() const {
     return this->list->frontVal();
 }
-template <class T>
+
+template <typename T>
 void StackSList<T>::pop() {
     this->list->removeFront();
     --this->curItemsNum;
 }
-template <class T>
-void StackSList<T>::push(const_ref_type val) {
+
+template <typename T>
+void StackSList<T>::push(Ref_const_t val) {
     this->list->addFront(val);
     ++this->curItemsNum;
 }

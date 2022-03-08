@@ -1,5 +1,7 @@
 #ifndef EXCEPTIONS_H_
+
 #define EXCEPTIONS_H_
+
 #include <exception>
 
 struct StackEmptyException : protected std::exception {
