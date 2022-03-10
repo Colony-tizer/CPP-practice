@@ -4,7 +4,7 @@
 #include <string>
 #include <ostream>
 
-template <class T>
+template <typename T>
 class SingleLinkedItem {
     public:
         typedef T Value_t;

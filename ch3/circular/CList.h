@@ -1,10 +1,13 @@
 #ifndef CLIST_H_
+
 #define CLIST_H_
+
 #include "../single/SingleLinkedItem.h"
 #include <string>
-template <class T> class SingleLinkedItem;
 
-template <class T>
+template <typename T> class SingleLinkedItem;
+
+template <typename T>
 class CList {
     private:
         typedef SingleLinkedItem<T> Single_link_item_t;

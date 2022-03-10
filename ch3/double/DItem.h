@@ -1,4 +1,5 @@
 #ifndef DITEM_H_
+
 #define DITEM_H_
 
 #include <ostream>

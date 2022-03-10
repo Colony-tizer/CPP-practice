@@ -3,7 +3,7 @@
 
 using namespace std;
 
-template <class T>
+template <typename T>
 void printAllList(CList<T>* list) {
     int total = list->getSize();
     while (total-- > 0) {

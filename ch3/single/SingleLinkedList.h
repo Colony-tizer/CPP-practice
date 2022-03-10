@@ -4,6 +4,7 @@
 
 #include <ostream>
 #include "SingleLinkedItem.h"
+
 template <typename T> class SingleLinkedItem;
 template <typename T> class SingleLinkedList;
 
@@ -33,5 +34,7 @@ class SingleLinkedList {
     private:
         Single_link_item_ptr_t head;
 };
+
 #include "SingleLinkedList.tpp"
+
 #endif

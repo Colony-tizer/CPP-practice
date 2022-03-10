@@ -1,4 +1,5 @@
 #include "SingleLinkedList.h"
+
 template <typename T>
 SingleLinkedList<T>::SingleLinkedList() {
     head = nullptr;
