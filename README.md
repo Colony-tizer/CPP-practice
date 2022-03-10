@@ -1,8 +1,8 @@
 # CPP-practice
 C Plus Plus practice exercises.
 Completed according to ["Data Structures and Algorithms in C++, 2nd Edition" Michael T. Goodrich, Roberto Tamassia, David M. Mount](https://www.wiley.com/en-us/Data+Structures+and+Algorithms+in+C++,+2nd+Edition-p-9780470460443).
-# COMING SOON: clean version of source code with commentaries 
-# PROGRESS
+# TBD: Usage of Guidelines Support Library
+# Formatting and Refactoring report
 | Chapter         |  STATUS |
 |-----------------|---------|
 | Chapter 2       | &#x1F49A; Refined
