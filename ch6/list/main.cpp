@@ -1,29 +1,41 @@
 #include "NodeList.h"
 #include <iostream>
 using namespace std;
-template <class T>
+
+template <typename T>
 void printList(const NodeList<T>& list) {
-    for (auto it = list.begin(); it != list.end(); 
-    it++) {
-        cout<<*it<<" <-> ";
+    for (auto el : list) {
+        cout<<el<<" <-> ";
     }
     cout<<"NULL\n";
 }
-int main() {
-    NodeList<int> a;
-    a.insertFront(1);
-    a.insertFront(2);
-    a.insertFront(3);
-    printList(a);
 
-    for (auto it = a.begin(); it != a.end(); 
-    ++it) {
-        a.remove(it);
+void demoListInsertIterateRemove() {
+    NodeList<int> nodeList;
+    nodeList.insertFront(1);
+    nodeList.insertFront(2);
+    nodeList.insertFront(3);
+
+    for (auto it = nodeList.begin(); it != nodeList.end(); ++it)
+        nodeList.remove(it);
+}
+
+void createListWithOddLeftEvenRight() {
+    const int MAX_INSERTIONS = 9;
+    
+    NodeList<int> nodeList;
+
+    for (auto i = 0; i < MAX_INSERTIONS; ++i) {
+        if (i % 2 == 0) 
+            nodeList.insertBack(i);
+        else 
+            nodeList.insertFront(i);
     }
-    int max = 5;
-    for (int i = 0; i < max; ++i) {
-        if (i % 2 == 0) a.insertBack(i);
-        else a.insertFront(i);
-    }
-    printList(a);
+
+    printList(nodeList);
+}
+
+int main() {
+    demoListInsertIterateRemove();
+    createListWithOddLeftEvenRight();
 }

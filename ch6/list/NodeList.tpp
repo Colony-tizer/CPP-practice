@@ -1,87 +1,124 @@
 #include "NodeList.h"
-template <class T>
+
+template <typename T>
 NodeList<T>::NodeList() {
-    size = 0; head = new node_type(); tail = new node_type();
+    size = 0;
+    head = new Node_value_t();
+    tail = new Node_value_t();
+    
     head->next = tail;
     tail->prev = head;
 }
-template <class T>
+
+template <typename T>
 NodeList<T>::~NodeList() {
     while (!isEmpty()) removeFront();
+
     delete head, tail;
 }
-template <class T>
+
+template <typename T>
 int NodeList<T>::getSize() const{
     return size;
 }
-template <class T>
+
+template <typename T>
 bool NodeList<T>::isEmpty() const{
     return getSize() == 0;
 }
-template <class T>
-typename NodeList<T>::iter_type NodeList<T>::begin() const{
-    return iter_type(head->next);
+
+template <typename T>
+typename NodeList<T>::Iterator_t NodeList<T>::begin() const{
+    return Iterator_t(head->next);
 }
-template <class T>
-typename NodeList<T>::iter_type NodeList<T>::end() const{
-    return iter_type(tail);
+
+template <typename T>
+typename NodeList<T>::Iterator_t NodeList<T>::end() const{
+    return Iterator_t(tail);
 }
-template <class T>
-void NodeList<T>::insertFront(const_ref_type val) {
+
+template <typename T>
+void NodeList<T>::insertFront(Ref_const_t val) {
     ++size;
-    ptr_node_type newObj = new node_type(val);
+    Node_ptr_t newObj = new Node_value_t(val);
+
     newObj->prev = head;
     newObj->next = head->next;
+
     head->next->prev = newObj;
     head->next = newObj;
-    if (getSize() == 1) tail->prev = head->next;
+
+    if (getSize() == 1) 
+        tail->prev = head->next;
 }
-template <class T>
-void NodeList<T>::insertBack(const_ref_type val) {
+
+template <typename T>
+void NodeList<T>::insertBack(Ref_const_t val) {
     ++size;
-    ptr_node_type newObj = new node_type(val);
+    Node_ptr_t newObj = new Node_value_t(val);
+
     newObj->next = tail;
     newObj->prev = tail->prev;
+
     tail->prev->next = newObj;
     tail->prev = newObj;
-    if (getSize() == 1) head->next = tail->prev;
+
+    if (getSize() == 1) 
+        head->next = tail->prev;
 }
-template <class T>
-void NodeList<T>::insert(const_ref_iter_type it, const_ref_type val) {
+
+template <typename T>
+void NodeList<T>::insert(Iterator_const_ref it, Ref_const_t val) {
     ++size;
-    ptr_node_type newObj = new node_type(val);
-    ptr_node_type prev = it.value->prev;
+    Node_ptr_t newObj = new Node_value_t(val);
+    Node_ptr_t prev = it.value->prev;
+
     newObj->next = it.value;
     newObj->prev = prev;
+
     prev->next = newObj;
+
     it.value->prev = newObj;
 }
-template <class T>
+
+template <typename T>
 void NodeList<T>::removeFront() {
-    if (isEmpty()) throw "Empty";
+    if (isEmpty()) throw "NodeListEmpty";
+
     --size;
-    ptr_node_type newHead = head->next->next;
-    ptr_node_type delNode = newHead->prev;
+    Node_ptr_t newHead = head->next->next;
+    Node_ptr_t remNode = newHead->prev;
+
     newHead->prev = head;
     head->next = newHead;
-    delete delNode;
+
+    delete remNode;
 }
-template <class T>
+
+template <typename T>
 void NodeList<T>::removeBack() {
-    if (isEmpty()) throw "Full";
+    if (isEmpty()) throw "NodeListEmpty";
+
     --size;
-    ptr_node_type newTail = *tail->prev->prev;
-    ptr_node_type delNode = newTail->next;
+    Node_ptr_t newTail = *tail->prev->prev;
+    Node_ptr_t remNode = newTail->next;
+
     newTail->next = tail;
     tail->prev = newTail;
+
+    delete remNode;
 }
-template <class T>
-void NodeList<T>::remove(const_ref_iter_type it) {
-    if (isEmpty()) throw "Empty";
+
+template <typename T>
+void NodeList<T>::remove(Iterator_const_ref it) {
+    if (isEmpty()) throw "NodeListEmpty";
+
     --size;
-    ptr_node_type next = it.value->next;
-    ptr_node_type prev = it.value->prev;
+    Node_ptr_t next = it.value->next;
+    Node_ptr_t prev = it.value->prev;
+
     prev->next = next;
     next->prev = prev;
+
     delete it.value;
 }

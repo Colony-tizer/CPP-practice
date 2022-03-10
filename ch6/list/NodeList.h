@@ -1,46 +1,52 @@
 #ifndef NODELIST_H_
+
 #define NODELIST_H_
+
 #include "Iterator.h"
 
-template <class T> class Iterator;
-template <class T> class Node;
+template <typename T> class Iterator;
+template <typename T> class Node;
 
-template <class T>
+template <typename T>
 class NodeList {
+    private:
+        typedef T Value_t;
+        typedef Value_t* Ptr_t;
+        typedef Value_t& Ref_t;
+        typedef Value_t const& Ref_const_t;
+
+        typedef Iterator<T> Iterator_t;
+        typedef Iterator_t const& Iterator_const_ref;
+
+        typedef Node<T> Node_value_t;
+        typedef Node_value_t* Node_ptr_t;
+
     public:
         class Iterator<T>;
         struct Node<T>;
-    private:
-        typedef T value_type;
-        typedef value_type* ptr_type;
-        typedef value_type& ref_type;
-        typedef value_type const& const_ref_type;
 
-        typedef Iterator<T> iter_type;
-        typedef Iterator<T> const& const_ref_iter_type;
-
-        typedef Node<T> node_type;
-        typedef node_type* ptr_node_type;
-        typedef node_type& ref_node_type;
-        typedef node_type const& const_ref_node_type;
-    public:
         NodeList();
         NodeList(const NodeList& obj) : size(obj.size), head(obj.head), tail(obj.tail) {}
         ~NodeList();
+
         int getSize() const;
         bool isEmpty() const;
-        iter_type begin() const;
-        iter_type end() const;
-        void insertFront(const_ref_type val);
-        void insertBack(const_ref_type val);
-        void insert(const_ref_iter_type it, const_ref_type val);
+
+        Iterator_t begin() const;
+        Iterator_t end() const;
+
+        void insertFront(Ref_const_t val);
+        void insertBack(Ref_const_t val);
+        void insert(Iterator_const_ref it, Ref_const_t val);
+
         void removeFront();
         void removeBack();
-        void remove(const_ref_iter_type it);
+        void remove(Iterator_const_ref it);
+
     private:
         int size;
-        ptr_node_type head;
-        ptr_node_type tail;
+        Node_ptr_t head;
+        Node_ptr_t tail;
 
 };
 #include "NodeList.tpp"
