@@ -1,9 +1,9 @@
 #include <exception>
 
 struct EmptyVectorError : public std::exception {
-    const char* what() { return "Empty Vector Error: there are no items in vector"; }
+    const char* what() { return "Empty Vector Error: There are no items in the vector"; }
 };
 
 struct OutOfRangeError : public std::exception {
-    const char* what() { return "Out Of Range Error: input index is out of range"; }
+    const char* what() { return "Out Of Range Error: Input index is out of the range"; }
 };
