@@ -6,10 +6,22 @@ Leaderboard::Leaderboard(int cap /* = 10*/) {
 
     scoresLen = 0;
     scores = new GameEntry[cap];
+    
+    isInited = true;
+}
+
+Leaderboard::Leaderboard(const Leaderboard& copyObj) {
+    deepCopy(copyObj);
 }
 
 Leaderboard::~Leaderboard() {
     delete[] scores; 
+}
+
+Leaderboard& Leaderboard::operator=(const Leaderboard& copyObj) {
+    deepCopy(copyObj);
+
+    return *this;
 }
 
 void Leaderboard::add(const GameEntry &entry) {
@@ -29,12 +41,18 @@ void Leaderboard::add(const GameEntry &entry) {
     scores[i] = entry;
 }
 
-GameEntry Leaderboard::remove(const GameEntry &entry) {
-    return remove(entry, CheckMode::BothCheck);
+void Leaderboard::removeWithName(const std::string name) {
+    GameEntry removeItem(DEFAULT_SEARCH_SCORE, name);
+    return remove(removeItem, MatchMode::Name);
 }
 
-GameEntry Leaderboard::remove(int score) {
-    return remove(GameEntry(score), CheckMode::ScoreCheck);
+void Leaderboard::removeWithScore(const int score) {
+    GameEntry removeItem(score);
+    return remove(removeItem, MatchMode::Score);
+}
+
+void Leaderboard::removeEntry(const GameEntry &entry) {;
+    return remove(entry, MatchMode::Exact);
 }
 
 std::string Leaderboard::toString() const{
@@ -49,34 +67,81 @@ std::string Leaderboard::toString() const{
     return info;
 }
 
-GameEntry Leaderboard::remove(const GameEntry &entry, CheckMode mode) {
-    GameEntry rem = GameEntry(INT32_MIN, "NO_MATCH");
-    for (int cnt = 0; cnt < scoresLen; ++cnt) {
-        bool flag = true;
-        if (mode == CheckMode::ScoreCheck || mode == CheckMode::BothCheck) 
-            flag = flag && scores[cnt].getScore() == entry.getScore();
-        
-        if (mode == CheckMode::NameCheck  || mode == CheckMode::BothCheck) 
-            flag = flag && scores[cnt].getName() == entry.getName();
-        
-        if (flag) {
-            rem = removeAt(cnt);
+GameEntry Leaderboard::findWithName(const std::string name) {
+    GameEntry searchItem(DEFAULT_SEARCH_SCORE, name);
+    return findEntry(searchItem, MatchMode::Name);
+}
+
+GameEntry Leaderboard::findWithScore(const int score) {
+    GameEntry searchItem(score);
+    return findEntry(searchItem, MatchMode::Score);
+}
+
+GameEntry Leaderboard::findEntry(const GameEntry &entry, const MatchMode matchMode /* = MatchMode::Exact*/) {
+    GameEntry foundEntry = GameEntry(DEFAULT_SEARCH_SCORE, DEFAULT_SEARCH_NAME);
+
+    auto foundIdx = getEntryIdx(entry, matchMode);
+
+    if (foundIdx >= 0)
+        foundEntry = scores[foundIdx];
+
+    return foundEntry;
+}
+
+int Leaderboard::getEntryIdx(const GameEntry &searchEntry, const MatchMode& matchMode) {
+    int foundIdx = -1;
+
+    for (size_t i = 0; i < scoresLen; ++i) {
+        bool foundFlag = true;
+        bool isEqual;
+
+        if (matchMode == MatchMode::Score or matchMode == MatchMode::Exact)
+        {
+            isEqual = scores[i].getScore() == searchEntry.getScore();
+            foundFlag = foundFlag and isEqual;
+        }
+        if (matchMode == MatchMode::Name or matchMode == MatchMode::Exact)
+        {
+            isEqual = scores[i].getName().compare(searchEntry.getName()) == 0;
+            foundFlag = foundFlag and isEqual;
+        }
+
+        if (foundFlag) {
+            foundIdx = i;
             break;
         }
     }
-    return rem;
+
+    return foundIdx;
 }
 
-GameEntry Leaderboard::removeAt(int idx) {
-    GameEntry removed = GameEntry(scores[idx]);
-    int cnt = idx;
+void Leaderboard::deepCopy(const Leaderboard& copyObj) {
+    if (isInited) this->~Leaderboard();
 
-    for (; cnt + 1 < scoresLen; ++cnt) {
-        scores[cnt] = scores[cnt + 1];
-    }
+    capacity = copyObj.capacity;
+    scoresLen = copyObj.scoresLen;
 
-    scores[cnt] = GameEntry();
+    scores = new GameEntry[capacity];
+    for (size_t i = 0; i < scoresLen; ++i)
+        scores[i] = copyObj.scores[i];
+}
+
+void Leaderboard::remove(const GameEntry &entry, const MatchMode matchMode) {
+    GameEntry foundEntry = GameEntry(DEFAULT_SEARCH_SCORE, DEFAULT_SEARCH_NAME);
+
+    auto foundIdx = getEntryIdx(entry, matchMode);
+
+    if (foundIdx < 0)
+        return;
+
+    removeAt(foundIdx);
+}
+
+void Leaderboard::removeAt(size_t idx) {
+    if (idx >= capacity) throw "Index Out Of Bounds";
+
+    for (size_t i = idx; i + 1 < scoresLen; ++i)
+        scores[i] = scores[i + 1];
+
     --scoresLen;
-
-    return removed;
 }
