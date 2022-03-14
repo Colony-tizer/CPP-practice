@@ -56,6 +56,8 @@ void testInsertAtMiddle(VectorArr<int>& vector) {
 
     vector.insertAt(MID_IDX, 13);
  
+    cout << "Inserted value: " << vector.at(MID_IDX) << endl;
+
     cout << vector.toString() << endl;
 }
 
