@@ -8,8 +8,8 @@ Completed according to ["Data Structures and Algorithms in C++, 2nd Edition" Mic
 | Chapter 2       | &#x1F49A; Refined
 | Chapter 3       | &#x1F49A; Refined
 | Chapter 5       | &#x1F49A; Refined
-| Chapter 6       | &#x1F49B; WIP
-| Chapter 7       | &#x1F49C; Pending
+| Chapter 6       | &#x1F49A; Refined
+| Chapter 7       | &#x1F49B; WIP
 | Chapter 8       | &#x1F49C; Pending
 | Chapter 9       | &#x1F49C; Pending
 | Chapter 10      | &#x1F49C; Pending
